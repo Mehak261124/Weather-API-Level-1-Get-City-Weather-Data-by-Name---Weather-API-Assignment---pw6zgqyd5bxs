@@ -3,14 +3,22 @@ const router = express.Router();
 const weatherController = require('../controllers/weatherController');
 
 // Level 1: Get City Weather Data by Name
-router.get('/city/:name', async (req, res) => {
+router.get('/city/:name/forecast', async (req, res) => {
   try {
     const cityName = req.params.name;
-    const weatherData = await weatherController.getWeatherDataByName(cityName);
-    res.status(200).json({ status: 'success', message: 'Weather data retrieved', data: weatherData });
+    const forecastData = await weatherController.getForecastDataByName(cityName);
+    res.status(200).json({
+      status: 'success',
+      message: 'Forecast data retrieved',
+      data: forecastData,
+    });
   } catch (error) {
     console.log(error);
-    res.status(404).json({ status: 'error', message: 'Failed to retrieve weather data', error: error.message });
+    res.status(404).json({
+      status: 'error',
+      message: 'Failed to retrieve forecast data',
+      error: error.message,
+    });
   }
 });
 
