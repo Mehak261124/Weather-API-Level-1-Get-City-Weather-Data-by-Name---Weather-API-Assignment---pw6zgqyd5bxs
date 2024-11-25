@@ -27,7 +27,24 @@ async function saveDataToDatabase(data) {
 
 // Level 1: Get City Weather Data by Name
 async function getWeatherDataByName(cityName) {
-  
+  try {
+    const data = await getDataFromDatabase();
+    const cityData = data.find((city) => city.city.toLowerCase() === cityName.toLowerCase());
+
+    if (!cityData) {
+      throw new Error('City not found');
+    }
+
+    return {
+      city: cityData.city,
+      temperature: cityData.weather.temperature,
+      humidity: cityData.weather.humidity,
+      windSpeed: cityData.weather.windSpeed,
+      conditions: cityData.weather.conditions,
+    };
+  } catch (error) {
+    throw error; 
+  }
 }
 
 
